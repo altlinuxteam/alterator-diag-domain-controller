@@ -20,6 +20,12 @@ DisplayName[ru_RU] = Проверка правильного написания 
 Comment = Checking the correct spelling of the domain name of the host
 Comment[ru_RU] = Проверка правильного написания доменного имени хоста
 
+[is_hostname_static_and_transient]
+DisplayName = Checking if the static and temporary hostname match
+DisplayName[ru_RU] = Проверка соответствия статического и временного имён хостов
+Comment = Checking if the static and temporary hostname match
+Comment[ru_RU] = Проверка соответствия статического и временного имён хостов
+
 [is_not_empty_sysvol]
 DisplayName = Checking if the sysvol directory is empty
 DisplayName[ru_RU] = Проверка: содержит ли файлы каталог sysvol

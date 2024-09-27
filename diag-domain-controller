@@ -234,6 +234,29 @@ is_hostname_correct() {
     return $retval
 }
 
+# Checking if the static and temporary hostname match
+is_hostname_static_and_transient() {
+    local retval=0
+    local static_hostname=
+    local transient_hostname=
+
+    static_hostname="$(hostnamectl --static)" || retval=1
+    transient_hostname="$(hostnamectl --transient)" || retval=1
+    test "$static_hostname" = "$transient_hostname" || retval=2
+
+    if test "$retval" = 0; then
+        echo "The permanent hostname is the same as the temporary one. The host name is as follows: $static_hostname"
+    elif test "$retval" = 2; then
+        echo "The permanent hostname does not match the permanent one."
+        echo "Static hostname: $static_hostname"
+        echo "Transient hostname: $transient_hostname"
+    else
+        echo "The hostnamectl command could not be executed."
+    fi
+
+    return $retval
+}
+
 # Checking if the sysvol directory is empty
 is_not_empty_sysvol() {
     local retval=0
@@ -361,6 +384,7 @@ fi
 
 task is_domain_info_available
 task is_hostname_correct
+task is_hostname_static_and_transient
 task is_not_empty_sysvol
 task is_samba_package_installed
 task is_samba_service_running
