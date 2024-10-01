@@ -384,6 +384,25 @@ is_there_way_to_cache_kerberos_tickets() {
     return $retval
 }
 
+# Checking: is the search for the kerberos domain name enabled via DNS
+is_dns_lookup_kdc_enabled() {
+    local retval=0
+
+    if grep -q "^\s*dns_lookup_kdc\s*=\s*\([Tt][Rr][Uu][Ee]\|1\|[Yy][Ee][Ss]\)\s*$" /etc/krb5.conf; then
+        echo "The dns_lookup_kdc parameter in file \"/etc/krb5.conf\" is enabled."
+    else
+        if grep -q "^\s*dns_lookup_kdc\s*=" /etc/krb5.conf; then
+            echo "The dns_lookup_kdc parameter in file \"/etc/krb5.conf\" is disabled."
+            retval=1
+        else
+            echo "The dns_lookup_kdc parameter in file \"/etc/krb5.conf\" is disabled by default."
+            retval=2
+        fi
+    fi
+
+    return $retval
+}
+
 # Samba databases are checked for errors
 are_there_errors_in_samba_databases() {
     local retval=0
@@ -448,6 +467,7 @@ task is_samba_service_running
 task is_krb5_conf_file_exists
 task is_smb_conf_file_exists
 task is_there_way_to_cache_kerberos_tickets
+task is_dns_lookup_kdc_enabled
 task are_there_errors_in_samba_databases
 task is_ntp_service_running
 task is_time_synchronization_enabled

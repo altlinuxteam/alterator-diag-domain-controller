@@ -62,6 +62,12 @@ DisplayName[ru_RU] = Проверка указанного метода кэши
 Comment = Checking the specified method of caching Kerberos tickets
 Comment[ru_RU] = Проверка указанного метода кэширования билетов Kerberos
 
+[is_dns_lookup_kdc_enabled]
+DisplayName = Checking: is the search for the kerberos domain name enabled via DNS
+DisplayName[ru_RU] = Проверка: включен ли поиск доменного имени kerberos через DNS
+Comment = Checking: is the search for the kerberos domain name enabled via DNS
+Comment[ru_RU] = Проверка: включен ли поиск доменного имени kerberos через DNS
+
 [are_there_errors_in_samba_databases]
 DisplayName = Samba databases are checked for errors
 DisplayName[ru_RU] = Проверка на наличие ошибок в базах Samba
