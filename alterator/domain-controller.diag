@@ -56,6 +56,12 @@ DisplayName[ru_RU] = Проверка наличия файла конфигур
 Comment = Checking for the presence of the smb.conf configuration file and displaying the contents of the file
 Comment[ru_RU] = Проверка наличия файла конфигурации smb.conf и отображение содержимого файла
 
+[is_there_way_to_cache_kerberos_tickets]
+DisplayName = Checking the specified method of caching Kerberos tickets
+DisplayName[ru_RU] = Проверка указанного метода кэширования билетов Kerberos
+Comment = Checking the specified method of caching Kerberos tickets
+Comment[ru_RU] = Проверка указанного метода кэширования билетов Kerberos
+
 [are_there_errors_in_samba_databases]
 DisplayName = Samba databases are checked for errors
 DisplayName[ru_RU] = Проверка на наличие ошибок в базах Samba

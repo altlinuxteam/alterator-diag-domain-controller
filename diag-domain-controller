@@ -363,6 +363,27 @@ is_smb_conf_file_exists() {
     return $retval
 }
 
+# Checking the specified method of caching Kerberos tickets
+is_there_way_to_cache_kerberos_tickets() {
+    local retval=0
+    local ccache=
+
+    ccache="$(/usr/sbin/control krb5-conf-ccache)"
+
+    test -n "$ccache" -a "$ccache" != "unknow" || retval=1
+    test -n "$ccache" -a "$ccache" == "keyring" || retval=2
+
+    if test "$retval" = 0; then
+        echo "The following caching method is set: keyring."
+    elif test "$retval" = 2; then
+        echo "The caching method is set, it differs from the \"keyring\" method."
+    else
+        echo "The caching method is not specified."
+    fi
+
+    return $retval
+}
+
 # Samba databases are checked for errors
 are_there_errors_in_samba_databases() {
     local retval=0
@@ -426,6 +447,7 @@ task is_samba_package_installed
 task is_samba_service_running
 task is_krb5_conf_file_exists
 task is_smb_conf_file_exists
+task is_there_way_to_cache_kerberos_tickets
 task are_there_errors_in_samba_databases
 task is_ntp_service_running
 task is_time_synchronization_enabled
