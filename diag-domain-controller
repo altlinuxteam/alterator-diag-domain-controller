@@ -403,6 +403,24 @@ is_dns_lookup_kdc_enabled() {
     return $retval
 }
 
+# Checking for the presence of the resolv.conf configuration file and displaying the contents of the file
+is_resolv_conf_file_exists() {
+    local retval=0
+
+    test -e /etc/resolv.conf || retval=1
+
+    if test "$retval" = 0; then
+        echo -e "The resolv.conf configuration file exists. Its contents are as follows:\n"
+        ls -l /etc/resolv.conf
+        echo
+        cat /etc/resolv.conf
+    else
+        echo "The resolv.conf configuration file was not found."
+    fi
+
+    return $retval
+}
+
 # Samba databases are checked for errors
 are_there_errors_in_samba_databases() {
     local retval=0
@@ -468,6 +486,7 @@ task is_krb5_conf_file_exists
 task is_smb_conf_file_exists
 task is_there_way_to_cache_kerberos_tickets
 task is_dns_lookup_kdc_enabled
+task is_resolv_conf_file_exists
 task are_there_errors_in_samba_databases
 task is_ntp_service_running
 task is_time_synchronization_enabled

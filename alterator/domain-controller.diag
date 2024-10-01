@@ -68,6 +68,12 @@ DisplayName[ru_RU] = Проверка: включен ли поиск домен
 Comment = Checking: is the search for the kerberos domain name enabled via DNS
 Comment[ru_RU] = Проверка: включен ли поиск доменного имени kerberos через DNS
 
+[is_resolv_conf_file_exists]
+DisplayName = Checking for the presence of the resolv.conf configuration file and displaying the contents of the file
+DisplayName[ru_RU] = Проверка наличия файла конфигурации resolv.conf и отображение содержимого файла
+Comment = Checking for the presence of the resolv.conf configuration file and displaying the contents of the file
+Comment[ru_RU] = Проверка наличия файла конфигурации resolv.conf и отображение содержимого файла
+
 [are_there_errors_in_samba_databases]
 DisplayName = Samba databases are checked for errors
 DisplayName[ru_RU] = Проверка на наличие ошибок в базах Samba
