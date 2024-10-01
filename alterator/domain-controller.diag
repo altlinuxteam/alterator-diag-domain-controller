@@ -44,6 +44,12 @@ DisplayName[ru_RU] = Проверка: запущена ли служба Samba
 Comment = Checking whether the Samba service is running
 Comment[ru_RU] = Проверка: запущена ли служба Samba
 
+[is_krb5_conf_file_exists]
+DisplayName = Checking for the presence of the krb5.conf configuration file and displaying the contents of the file
+DisplayName[ru_RU] = Проверка наличия файла конфигурации krb5.conf и отображение содержимого файла
+Comment = Checking for the presence of the krb5.conf configuration file and displaying the contents of the file
+Comment[ru_RU] = Проверка наличия файла конфигурации krb5.conf и отображение содержимого файла
+
 [are_there_errors_in_samba_databases]
 DisplayName = Samba databases are checked for errors
 DisplayName[ru_RU] = Проверка на наличие ошибок в базах Samba

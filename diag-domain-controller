@@ -327,6 +327,24 @@ is_samba_service_running() {
     return $retval
 }
 
+# Checking for the presence of the krb5.conf configuration file and displaying the contents of the file
+is_krb5_conf_file_exists() {
+    local retval=0
+
+    test -e /etc/krb5.conf || retval=1
+
+    if test "$retval" = 0; then
+        echo -e "The krb5.conf configuration file exists. Its contents are as follows:\n"
+        ls -l /etc/krb5.conf
+        echo
+        cat /etc/krb5.conf
+    else
+        echo "The krb5.conf configuration file was not found."
+    fi
+
+    return $retval
+}
+
 # Samba databases are checked for errors
 are_there_errors_in_samba_databases() {
     local retval=0
@@ -388,6 +406,7 @@ task is_hostname_static_and_transient
 task is_not_empty_sysvol
 task is_samba_package_installed
 task is_samba_service_running
+task is_krb5_conf_file_exists
 task are_there_errors_in_samba_databases
 task is_ntp_service_running
 task is_time_synchronization_enabled
