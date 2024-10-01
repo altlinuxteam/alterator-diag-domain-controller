@@ -468,6 +468,55 @@ does_resolv_conf_and_default_realm_it_match() {
     return $retval
 }
 
+# Checking the correspondence of the domain entry in the krb5.conf configuration file to the realm entry in the smb.conf configuration file
+does_smb_realm_and_krb5_default_realm_it_match() {
+    local retval=0
+    local smb_realm=
+    local krb5_default_realm_line=
+    local krb5_default_realm=
+    local domains=
+    local realm=
+
+    if which testparm >/dev/null 2>&1; then
+        smb_realm="$(testparm -l -v -s 2>/dev/null | grep "^\s*realm\s*=" | sed -e 's/^\s*realm\s*=\s*//' -e 's/\s*$//')"
+        smb_realm="$(echo "$smb_realm" | tr '[:upper:]' '[:lower:]')"
+
+        if test -z "$smb_realm"; then
+            echo -e "The realm record was not found in the \"smb.conf\" configuration file.\n"
+            retval=2
+        else
+            echo "The following realm entry has been defined from the \"smb.conf\" configuration file:"
+            echo -e "$smb_realm\n"
+
+        fi
+    else
+        echo -e "The \"testparm\" command could not be executed.\n"
+        retval=1
+    fi
+
+    if test -e /etc/krb5.conf; then
+        krb5_default_realm_line="$(grep "^\s*default_realm\s\+" /etc/krb5.conf || true)"
+        krb5_default_realm="$(echo "$krb5_default_realm_line" | sed -e 's/^\s*default_realm\s*=\s*//' -e 's/\s*$//')"
+        krb5_default_realm="$(echo "$krb5_default_realm" | tr '[:upper:]' '[:lower:]')"
+
+        echo "The following realm entry has been defined from the \"krb5.conf\" configuration file:"
+        echo -e "$krb5_default_realm\n"
+    else
+        echo -e "The \"krb5.conf\" configuration file was not found.\n"
+        retval=1
+    fi
+
+    test "$smb_realm" = "$krb5_default_realm" || retval=2
+
+    if test "$retval" = 0; then
+        echo "The realm entry from the \"krb5.conf\" configuration file is the same as the realm entry from the \"smb.conf\" configuration file."
+    elif test "$retval" = 2; then
+        echo "the realm entry from the \"krb5.conf\" configuration file does not match the realm entry from the \"smb.conf\" configuration file."
+    fi
+
+    return $retval
+}
+
 # Samba databases are checked for errors
 are_there_errors_in_samba_databases() {
     local retval=0
@@ -535,6 +584,7 @@ task is_there_way_to_cache_kerberos_tickets
 task is_dns_lookup_kdc_enabled
 task is_resolv_conf_file_exists
 task does_resolv_conf_and_default_realm_it_match
+task does_smb_realm_and_krb5_default_realm_it_match
 task are_there_errors_in_samba_databases
 task is_ntp_service_running
 task is_time_synchronization_enabled

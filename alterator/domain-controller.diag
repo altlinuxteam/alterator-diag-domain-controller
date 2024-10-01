@@ -80,6 +80,12 @@ DisplayName[ru_RU] = Проверка соответствия realm-запис�
 Comment = Checking whether the realm record in the krb5.conf configuration file matches one of the domain names in the resolv.conf configuration file
 Comment[ru_RU] = Проверка соответствия realm-записи в файле конфигурации krb5.conf одному из доменных имён в файле конфигурации resolv.conf
 
+[does_smb_realm_and_krb5_default_realm_it_match]
+DisplayName = Checking the correspondence of the domain entry in the krb5.conf configuration file to the realm entry in the smb.conf configuration file
+DisplayName[ru_RU] = Проверка соответствия записи домена в файле конфигурации krb5.conf и realm-записи в файле конфигурации smb.conf
+Comment = Checking the correspondence of the domain entry in the krb5.conf configuration file to the realm entry in the smb.conf configuration file
+Comment[ru_RU] = Проверка соответствия записи домена в файле конфигурации krb5.conf и realm-записи в файле конфигурации smb.conf
+
 [are_there_errors_in_samba_databases]
 DisplayName = Samba databases are checked for errors
 DisplayName[ru_RU] = Проверка на наличие ошибок в базах Samba
