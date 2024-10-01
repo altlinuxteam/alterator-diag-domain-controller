@@ -345,6 +345,24 @@ is_krb5_conf_file_exists() {
     return $retval
 }
 
+# Checking for the presence of the smb.conf configuration file and displaying the contents of the file
+is_smb_conf_file_exists() {
+    local retval=0
+
+    test -e /etc/samba/smb.conf || retval=1
+
+    if test "$retval" = 0; then
+        echo -e "The smb.conf configuration file exists. Its contents are as follows:\n"
+        ls -l /etc/samba/smb.conf
+        echo
+        cat /etc/samba/smb.conf
+    else
+        echo "The smb.conf configuration file was not found."
+    fi
+
+    return $retval
+}
+
 # Samba databases are checked for errors
 are_there_errors_in_samba_databases() {
     local retval=0
@@ -407,6 +425,7 @@ task is_not_empty_sysvol
 task is_samba_package_installed
 task is_samba_service_running
 task is_krb5_conf_file_exists
+task is_smb_conf_file_exists
 task are_there_errors_in_samba_databases
 task is_ntp_service_running
 task is_time_synchronization_enabled

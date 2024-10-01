@@ -50,6 +50,12 @@ DisplayName[ru_RU] = Проверка наличия файла конфигур
 Comment = Checking for the presence of the krb5.conf configuration file and displaying the contents of the file
 Comment[ru_RU] = Проверка наличия файла конфигурации krb5.conf и отображение содержимого файла
 
+[is_smb_conf_file_exists]
+DisplayName = Checking for the presence of the smb.conf configuration file and displaying the contents of the file
+DisplayName[ru_RU] = Проверка наличия файла конфигурации smb.conf и отображение содержимого файла
+Comment = Checking for the presence of the smb.conf configuration file and displaying the contents of the file
+Comment[ru_RU] = Проверка наличия файла конфигурации smb.conf и отображение содержимого файла
+
 [are_there_errors_in_samba_databases]
 DisplayName = Samba databases are checked for errors
 DisplayName[ru_RU] = Проверка на наличие ошибок в базах Samba
