@@ -74,6 +74,12 @@ DisplayName[ru_RU] = Проверка наличия файла конфигур
 Comment = Checking for the presence of the resolv.conf configuration file and displaying the contents of the file
 Comment[ru_RU] = Проверка наличия файла конфигурации resolv.conf и отображение содержимого файла
 
+[does_resolv_conf_and_default_realm_it_match]
+DisplayName = Checking whether the realm record in the krb5.conf configuration file matches one of the domain names in the resolv.conf configuration file
+DisplayName[ru_RU] = Проверка соответствия realm-записи в файле конфигурации krb5.conf одному из доменных имён в файле конфигурации resolv.conf
+Comment = Checking whether the realm record in the krb5.conf configuration file matches one of the domain names in the resolv.conf configuration file
+Comment[ru_RU] = Проверка соответствия realm-записи в файле конфигурации krb5.conf одному из доменных имён в файле конфигурации resolv.conf
+
 [are_there_errors_in_samba_databases]
 DisplayName = Samba databases are checked for errors
 DisplayName[ru_RU] = Проверка на наличие ошибок в базах Samba
