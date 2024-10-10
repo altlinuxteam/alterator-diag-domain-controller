@@ -43,7 +43,9 @@ Usage: $PROG_NAME [options] [<diagnostic-task>]
 Options:
     -l, --list			list of diagnostic tasks
     -V, --version		print program version and exit
-    -h, --help			show this text and exit
+    -v, --verbose               verbose output to terminal
+    -r, --report=[file]         output to report file (optional file path)
+    -h, --help                  show this text and exit
 EOF
     exit 0
 }
