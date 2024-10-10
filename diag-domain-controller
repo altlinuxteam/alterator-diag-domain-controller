@@ -66,22 +66,40 @@ create_title() {
     fi
 }
 
-task_func="$(echo "$task_list" | sed -E 's/(\s-[-a-zA-Z]+(\s+\S+)?|\s--[-a-zA-Z]+(\s+\S+)?)+//g')"
-if test -z "$task_func" || echo "$task_func" | grep -q "^-"; then
-    task_func=""
-else
-    task_list="$task_list -v"
+task_func=
+task_options=
+
+for word in $task_list; do
+    case "$word" in
+        --*|-*)
+            task_options="$task_options $word"
+            ;;
+        *)
+            task_func="$task_func $word"
+            ;;
+    esac
+done
+
+if test -n "$task_func"; then
+    task_options="$task_options -v"
     cmd="verbose"
 fi
 
-if echo "$task_list" | grep -q " -v" && ! echo "$task_list" | grep -q " -l"; then
+task_func="$(echo "$task_func" | tr ' ' '\n' | sort -u | tr '\n' ' ')"
+task_func="$(echo "$task_func" | sed 's/[[:space:]]*//;s/[[:space:]]*$//')"
+task_options="$(echo "$task_options" | tr ' ' '\n' | sort -u | tr '\n' ' ')"
+task_options="$(echo "$task_options" | sed 's/[[:space:]]*//;s/[[:space:]]*$//')"
+
+if test -z "$task_func" && test "$task_options" = "-v" || test "$task_options" = "--verbose" || test "$task_options" = "-v --verbose"; then
+    create_title
+elif test -n "$task_func"; then
     create_title
 fi
 
 short_options="l,V,v,r::,h"
 long_options="list,version,verbose,report::,help"
 
-TEMP=$(getopt -n "$PROG_NAME" -o "$options", -l "$long_options" -- "$@") || show_usage
+TEMP=$(getopt -n "$PROG_NAME" -o "$short_options", -l "$long_options" -- "$@") || show_usage
 eval set -- "$TEMP"
 
 while :; do
@@ -95,10 +113,6 @@ while :; do
             shift
             ;;
         -v|--verbose)
-            if test -z "$task_func"; then
-                create_title
-            fi
-
             cmd="verbose"
             shift
             ;;
