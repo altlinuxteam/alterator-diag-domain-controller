@@ -369,12 +369,17 @@ task is_ntp_service_running
 task is_time_synchronization_enabled
 
 if test "$cmd" = "report"; then
-    cat "$journal"
-fi
+    file_smb="/etc/samba/smb.conf"
+    file_krb="/etc/krb5.conf"
 
-# TODO: It is planned to write the rest of the functions for the tests
-# TODO: Will need to add a logging feature
-# TODO: In the task() function, will need to add the result [WARN]
-# TODO: Will need to think about how to output the results of [DONE], [FAIL], [WARN]
+    zip -qj "${report_archive}" "$journal" "$file_smb" "$file_krb"
+
+    if test -n "$path_to_report_archive"; then
+        cp "${report_archive}" "$path_to_report_archive"
+        echo "The archive with the report is saved along the way: $(pwd)/$path_to_report_archive"
+    else
+        cat "${report_archive}"
+    fi
+fi
 
 exit "$global_retval"
