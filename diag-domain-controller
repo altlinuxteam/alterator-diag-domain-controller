@@ -16,7 +16,7 @@ set -euo pipefail
 . shell-temp
 
 PROG_NAME="${0##*/}"
-VERSION="0.0.1"
+VERSION="0.0.2"
 global_retval=0
 task_list="$*"
 cmd="default"
