@@ -11,7 +11,7 @@ stdout_byte_limit = 200000
 action_id = Info
 
 [Run]
-execute = diag-domain-controller {param}
+execute = diag-domain-controller {param} -v
 stdout_signal_name = diag1_stdout_signal
 stderr_signal_name = diag1_stderr_signal
 thread_limit = 3
@@ -26,5 +26,5 @@ action_id = List
 [Report]
 execute = diag-domain-controller -r
 stdout_bytes = enabled
-stdout_strings_limit = 200000
+stdout_byte_limit = 200000
 action_id = Report
