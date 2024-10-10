@@ -179,8 +179,14 @@ task() {
     	    delimiter_line >> "$journal"
             test_status "$retval" "$task" >> "$journal"
             ;;
-	run)
-	    if test -z "$task_list" || grep "$task" <<< "$task_list"; then
+	default)
+	    local retval=0
+
+	    task_run "$task" &> /dev/null || retval="$?"
+	    test_status "$retval" "$task"
+	    ;;
+	verbose)
+	    if test -z "$task_func" || grep -q "$task" <<< "$task_func"; then
 		local retval=0
 		delimiter_line
 		task_run "$task" || retval="$?"
