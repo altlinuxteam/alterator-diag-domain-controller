@@ -50,6 +50,34 @@ EOF
     exit 0
 }
 
+text_title="        Domain Controller Diagnostic Tool
+-------------------------------------------------
+Version: $VERSION
+Date: $current_date
+-------------------------------------------------
+System information:
+Kernel: $(uname -r)"
+
+create_title() {
+    if test "$cmd" == "report"; then
+        echo "$text_title" >> "$journal"
+    else
+        echo "$text_title" 
+    fi
+}
+
+task_func="$(echo "$task_list" | sed -E 's/(\s-[-a-zA-Z]+(\s+\S+)?|\s--[-a-zA-Z]+(\s+\S+)?)+//g')"
+if test -z "$task_func" || echo "$task_func" | grep -q "^-"; then
+    task_func=""
+else
+    task_list="$task_list -v"
+    cmd="verbose"
+fi
+
+if echo "$task_list" | grep -q " -v"; then
+    create_title
+fi
+
 TEMP=$(getopt -n "$PROG_NAME" -o "l,V,r,h", -l "list,version,report,help" -- "$@") || show_usage
 eval set -- "$TEMP"
 
@@ -80,18 +108,6 @@ while :; do
 	    ;;
     esac
 done
-
-create_title() {
-    cat <<EOF >>"$journal"
-        Domain Controller Diagnostic Tool
--------------------------------------------------
-Version: $VERSION
-Date: $current_date
--------------------------------------------------
-System information:
-Kernel: $(uname -r)
-EOF
-}
 
 task_show() {
     local func="$1"
