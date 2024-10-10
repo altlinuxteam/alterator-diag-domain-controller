@@ -19,11 +19,13 @@ PROG_NAME="${0##*/}"
 VERSION="0.0.1"
 global_retval=0
 task_list="$*"
-cmd="run"
+cmd="default"
 current_date=$(date +"%Y-%m-%d_%H:%M")
 temp_dir=
 create_temporary temp_dir -d
 journal="$temp_dir/report_$current_date.txt"
+report_archive="$temp_dir/report_$current_date.zip"
+path_to_report_archive=
 
 print_version() {
     cat <<EOF
