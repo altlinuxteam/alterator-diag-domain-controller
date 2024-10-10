@@ -74,38 +74,51 @@ else
     cmd="verbose"
 fi
 
-if echo "$task_list" | grep -q " -v"; then
+if echo "$task_list" | grep -q " -v" && ! echo "$task_list" | grep -q " -l"; then
     create_title
 fi
 
-TEMP=$(getopt -n "$PROG_NAME" -o "l,V,r,h", -l "list,version,report,help" -- "$@") || show_usage
+short_options="l,V,v,r::,h"
+long_options="list,version,verbose,report::,help"
+
+TEMP=$(getopt -n "$PROG_NAME" -o "$options", -l "$long_options" -- "$@") || show_usage
 eval set -- "$TEMP"
 
 while :; do
     case "$1" in
-	-l|--list)
-	    cmd="list"
-	    shift
-	    ;;
-	-V|--version)
-	    print_version
-	    shift
-	    ;;
+        -l|--list)
+            cmd="list"
+            shift
+            ;;
+        -V|--version)
+            print_version
+            shift
+            ;;
+        -v|--verbose)
+            if test -z "$task_func"; then
+                create_title
+            fi
+
+            cmd="verbose"
+            shift
+            ;;
 	-r|--report)
-	    cmd="report"
-	    shift
-	    ;;
-	-h|--help)
-	    show_usage
-	    shift
-	    ;;
-	--)
-	    shift
-	    break
-	    ;;
-	*)
-	    fatal "Unrecognized option: $1"
-	    ;;
+            cmd="report"
+            shift
+            path_to_report_archive="${1#=}"
+            shift
+            ;;
+        -h|--help)
+            show_usage
+            shift
+            ;;
+        --)
+            shift
+            break
+            ;;
+        *)
+            fatal "Unrecognized option: $1"
+            ;;
     esac
 done
 
