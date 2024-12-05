@@ -585,7 +585,11 @@ is_ntp_service_running() {
 is_time_synchronization_enabled() {
     local retval=0
 
-    if test "$(timedatectl show -p NTPSynchronized --value)" = "yes"; then
+    timedatectl &> /dev/null || retval=1
+
+    if test "$retval" = 1; then
+        echo "An error occurred while executing the timedatectl command. Perhaps there is no such command."
+    elif test "$(timedatectl show -p NTPSynchronized --value)" = "yes"; then
 	echo -e "Syncing is enabled:\n"
 	timedatectl
 	retval=0
