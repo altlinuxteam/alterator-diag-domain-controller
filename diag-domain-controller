@@ -241,8 +241,14 @@ is_hostname_correct() {
 	echo -e "The full domain name of the host (FQDN):\n"
 	hostname
     else
-	echo -e "Error. Check the spelling of the domain name of the host:\n"
-	hostname
+	if test "$(echo -n $(hostname) | wc -c) -gt 15"; then
+	    echo -e "hostname is long:\n"
+	    hostname
+	    retval=1
+	else
+	    echo -e "Error. Check the spelling of the domain name of the host:\n"
+	    hostname
+	fi
     fi
 
     return $retval
