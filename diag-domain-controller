@@ -568,7 +568,11 @@ are_there_errors_in_samba_databases() {
 is_ntp_service_running() {
     local retval=0
 
-    if test "$(timedatectl show -p NTP --value)" = "yes"; then
+    timedatectl &> /dev/null || retval=1
+
+    if test "$retval" = 1; then
+	echo "An error occurred while executing the timedatectl command. Perhaps there is no such command."
+    elif test "$(timedatectl show -p NTP --value)" = "yes"; then
 	echo -e "The NTP service is active:\n"
 	timedatectl
 	retval=0
