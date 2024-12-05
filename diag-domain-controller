@@ -215,7 +215,7 @@ task() {
     esac
 }
 
-# Checking the availability of viewing general domain information
+# Checking the availability of writing general domain information
 is_domain_info_available() {
     local retval=0
 
