@@ -284,8 +284,15 @@ is_not_empty_sysvol() {
     test -n "$(ls -A /var/lib/samba/sysvol 2> /dev/null)" || retval=2
 
     if test "$retval" = 0; then
-	echo -e "The \"sysvol\" directory contains the following files:\n"
-	ls -A /var/lib/samba/sysvol
+	echo -e "The \"sysvol\" directory contains the following files (the first 10 files are presented):"
+	ls -laA /var/lib/samba/sysvol
+
+	for dir in $(ls -d /var/lib/samba/sysvol/*/ | head -n 10); do
+	    dir_name="$(basename $dir)"
+
+	    echo -e "\nListing for directory $dir_name (the first 10 files are presented):"
+	    ls -laA "$dir" | head -n 10
+	done
     else
 	echo -e "Error. There may be no rights to view the\ndirectory, the directory does not exist,\nor the directory is empty."
     fi
