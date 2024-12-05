@@ -220,9 +220,9 @@ is_domain_info_available() {
     local retval=0
     local out=
 
-    out="$(/usr/bin/samba-tool domain info 127.0.0.1 2>&1)"
+    out="$(/usr/bin/samba-tool domain info 127.0.0.1 2>&1)" || retval=1
 
-    if test $? = 0; then
+    if test "$retval" = 0; then
 	echo -e "General information about the domain controller:\n$out"
     else
 	echo -e "Error:\n$out"
@@ -343,14 +343,16 @@ is_samba_service_running() {
     local retval=0
     local service=
     local out=
+    local out_active=
 
     service="samba.service"
     out="$(systemctl status samba.service 2>&1 | head -n3)"
+    out_active="$(systemctl is-active "$service" 2>&1)"
 
-    if test "$(systemctl is-active "$service")" = "active"; then
+    if test "$out_active" = "active"; then
 	echo -e "The \"$service\" service is running:\n$out"
 	retval=0
-    elif test "$(systemctl is-active "$service")" = "failed"; then
+    elif test "$out_active" = "failed"; then
 	echo -e "The service is not running, an error has occurred:\n$out"
 	retval=1
     elif test "$(systemctl is-enabled "$service")" = "disabled"; then
