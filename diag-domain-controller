@@ -508,6 +508,8 @@ does_smb_realm_and_krb5_default_realm_it_match() {
         smb_realm="$(testparm -l -v -s 2>/dev/null | grep "^\s*realm\s*=" | sed -e 's/^\s*realm\s*=\s*//' -e 's/\s*$//')"
         smb_realm="$(echo "$smb_realm" | tr '[:upper:]' '[:lower:]')"
 
+	echo "The compliance of the realm record in smb.conf is checked using the testparm utility."
+
         if test -z "$smb_realm"; then
             echo -e "The realm record was not found in the \"smb.conf\" configuration file.\n"
             retval=2
