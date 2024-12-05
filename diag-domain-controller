@@ -266,9 +266,9 @@ is_hostname_static_and_transient() {
     test "$static_hostname" = "$transient_hostname" || retval=2
 
     if test "$retval" = 0; then
-        echo "The permanent hostname is the same as the temporary one. The host name is as follows: $static_hostname"
+        echo "The permanent hostname is the same as the transient one. The host name is as follows: $static_hostname"
     elif test "$retval" = 2; then
-        echo "The permanent hostname does not match the permanent one."
+        echo "The permanent hostname does not match the transient one."
         echo "Static hostname: $static_hostname"
         echo "Transient hostname: $transient_hostname"
     else
