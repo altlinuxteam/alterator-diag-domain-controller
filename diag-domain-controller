@@ -24,8 +24,8 @@ current_date=$(date +"%Y-%m-%d_%H:%M")
 temp_dir=
 create_temporary temp_dir -d
 journal="$temp_dir/report_$current_date.txt"
-report_archive="$temp_dir/report_$current_date.zip"
 path_to_report_archive=
+plain_mode=0
 
 print_version() {
     cat <<EOF
@@ -90,14 +90,8 @@ task_func="$(echo "$task_func" | sed 's/[[:space:]]*//;s/[[:space:]]*$//')"
 task_options="$(echo "$task_options" | tr ' ' '\n' | sort -u | tr '\n' ' ')"
 task_options="$(echo "$task_options" | sed 's/[[:space:]]*//;s/[[:space:]]*$//')"
 
-if test -z "$task_func" && test "$task_options" = "-v" || test "$task_options" = "--verbose" || test "$task_options" = "-v --verbose"; then
-    create_title
-elif test -n "$task_func"; then
-    create_title
-fi
-
-short_options="l,V,v,r::,h"
-long_options="list,version,verbose,report::,help"
+short_options="l,V,v,r::,h,p"
+long_options="list,version,verbose,report::,help,plain"
 
 TEMP=$(getopt -n "$PROG_NAME" -o "$short_options", -l "$long_options" -- "$@") || show_usage
 eval set -- "$TEMP"
@@ -114,14 +108,21 @@ while :; do
             ;;
         -v|--verbose)
             cmd="verbose"
+            create_title
             shift
             ;;
 	-r|--report)
             cmd="report"
+            create_title
             shift
             path_to_report_archive="${1#=}"
             shift
             ;;
+        -p|--plain)
+	    plain_mode=1
+	    report_archive="$temp_dir/report_$current_date.tar.gz"
+	    shift
+	    ;;
         -h|--help)
             show_usage
             shift
@@ -597,10 +598,6 @@ is_time_synchronization_enabled() {
     return $retval
 }
 
-if test "$cmd" = "report"; then
-    create_title
-fi
-
 task is_domain_info_available
 task is_hostname_correct
 task is_hostname_static_and_transient
@@ -622,13 +619,24 @@ if test "$cmd" = "report"; then
     file_smb="/etc/samba/smb.conf"
     file_krb="/etc/krb5.conf"
 
-    zip -qj "${report_archive}" "$journal" "$file_smb" "$file_krb"
+    if test "$plain_mode" = 0; then
+	report_archive="$TMP/report_$current_date.tar.gz"
+    fi
+
+    tar -czf "${report_archive}" \
+        -C "$(dirname "$journal")" "$(basename "$journal")" \
+        -C "$(dirname "$file_smb")" "$(basename "$file_smb")" \
+        -C "$(dirname "$file_krb")" "$(basename "$file_krb")"
 
     if test -n "$path_to_report_archive"; then
         cp "${report_archive}" "$path_to_report_archive"
-        echo "The archive with the report is saved along the way: $(pwd)/$path_to_report_archive"
+        echo "The archive with the report is saved along the way: $path_to_report_archive"
     else
-        cat "${report_archive}"
+        if test "$plain_mode" = 0; then
+            echo "The archive with the report is saved as: $report_archive"
+        else
+            cat "${report_archive}"
+        fi
     fi
 fi
 

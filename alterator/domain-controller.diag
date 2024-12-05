@@ -6,7 +6,7 @@ DisplayName[ru_RU] = Контроллер домена
 Comment = The Domain Controller Status Diagnostic Utility
 Comment[ru_RU] = Инструмент диагностики состояния контроллера домена
 Icon = diag-domain-controller
-ReportSuffix = txt
+ReportSuffix = tar.gz
 
 [is_domain_info_available]
 DisplayName = Checking the availability of viewing general domain information
