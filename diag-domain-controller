@@ -59,7 +59,7 @@ System information:
 Kernel: $(uname -r)"
 
 create_title() {
-    if test "$cmd" == "report"; then
+    if test "$cmd" = "report"; then
         echo "$text_title" >> "$journal"
     else
         echo "$text_title" 
@@ -218,15 +218,14 @@ task() {
 # Checking the availability of writing general domain information
 is_domain_info_available() {
     local retval=0
+    local out=
 
-    /usr/bin/samba-tool domain info 127.0.0.1 &> /dev/null || retval=1
+    out="$(/usr/bin/samba-tool domain info 127.0.0.1 2>&1)"
 
-    if test "$retval" = 0; then
-	echo -e "General information about the domain controller:\n"
-	/usr/bin/samba-tool domain info 127.0.0.1
+    if test $? = 0; then
+	echo -e "General information about the domain controller:\n$out"
     else
-	echo -e "Error:\n"
-	/usr/bin/samba-tool domain info 127.0.0.1
+	echo -e "Error:\n$out"
     fi
 
     return $retval
@@ -234,22 +233,34 @@ is_domain_info_available() {
 
 # Checking the correct spelling of the domain name of the host
 is_hostname_correct() {
+    local hostname=
+    local validate_regex=
     local retval=0
+    local smb_realm=
+    
+    smb_realm="$(testparm -l -v -s 2>/dev/null | grep "^\s*realm\s*=" | sed -e 's/^\s*realm\s*=\s*//' -e 's/\s*$//')"
+    smb_realm="$(echo "$smb_realm" | tr '[:upper:]' '[:lower:]')"
+    hostname="$(hostname -s)"
+    fqdn_hostname="$(hostname -f)"
+    validate_regex="^(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]*[a-zA-Z0-9])\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\-]*[A-Za-z0-9])$"
 
-    hostname | grep "^[^.]*\..*" &> /dev/null || retval=1
-
-    if test "$retval" = 0; then
-	echo -e "The full domain name of the host (FQDN):\n"
-	hostname
+    if [ "${#hostname}" -gt 15 ]; then
+	echo "Length must be less than 16 characters."
+	retval=1
     else
-	if test "$(echo -n $(hostname) | wc -c) -gt 15"; then
-	    echo -e "hostname is long:\n"
-	    hostname
-	    retval=1
+	grep -E "$validate_regex" >/dev/null 2>&1 <<< "$hostname" || retval=1
+	if [ $retval -eq 1 ]; then
+	    echo "Wrong hostname. It may contain prohibited characters."
 	else
-	    echo -e "Error. Check the spelling of the domain name of the host:\n"
-	    hostname
+	    grep -E "^[^.]+.$smb_realm$" >/dev/null 2>&1 <<< "$fqdn_hostname"
+	    if [ $? -gt 0 ]; then
+		echo "Controller name is not FQDN or domain_realm does not match. This may cause some problems."
+	    fi
 	fi
+    fi
+
+    if [ $retval -eq 0 ]; then
+	echo "The domain name of the domain controller corresponds to the FQDN."
     fi
 
     return $retval
@@ -331,27 +342,54 @@ is_samba_package_installed() {
 is_samba_service_running() {
     local retval=0
     local service=
+    local out=
 
     service="samba.service"
+    out="$(systemctl status samba.service 2>&1 | head -n3)"
 
     if test "$(systemctl is-active "$service")" = "active"; then
-	echo -e "The \"$service\" service is running:\n"
-	systemctl status "$service" | head -n3
+	echo -e "The \"$service\" service is running:\n$out"
 	retval=0
     elif test "$(systemctl is-active "$service")" = "failed"; then
-	echo -e "The service is not running, an error has occurred:\n"
-	systemctl status "$service"
+	echo -e "The service is not running, an error has occurred:\n$out"
 	retval=1
     elif test "$(systemctl is-enabled "$service")" = "disabled"; then
-	echo -e "Warning. The service is not active:\n"
-	systemctl status "$service"
+	echo -e "Warning. The service is not active:\n$out"
 	retval=2
     else
-	echo -e "Error. Perhaps the service is missing:\n"
-	systemctl status "$service"
+	echo -e "Error. Perhaps the service is missing:\n$out"
 	retval=1
     fi
 
+    return $retval
+}
+
+# Does the domain controller resolve DNS queries locally
+is_resolve_local() {
+    local retval=0
+    resolv_conf="/etc/resolv.conf"
+    found_search=0
+    found_correct_nameserver=0
+
+    while IPS= read -r line; do
+	if test "$found_search" = 0 && echo "$line" | grep -q "^search"; then
+	    found_search=1
+	    continue
+	fi
+
+	if test "$found_search" = 1 && echo "$line" | grep -q "^nameserver 127\.0\.0\.1"; then
+	    found_correct_nameserver=1
+	    break
+	fi
+    done < "$resolv_conf"
+
+    if test "$found_correct_nameserver" = 1; then
+	echo "In the resolv.conf file, the first line is nameserver 127.0.0.1 - everything is correct."
+    else
+	echo "In the resolv.conf file, the first line is a line other than nameserver 127.0.0.1 - is not correct"
+	retval=1
+    fi
+    
     return $retval
 }
 
@@ -550,15 +588,15 @@ does_smb_realm_and_krb5_default_realm_it_match() {
 # Samba databases are checked for errors
 are_there_errors_in_samba_databases() {
     local retval=0
+    local out=
 
-    /usr/bin/samba-tool dbcheck &> /dev/null || retval=1
+    out="$(/usr/bin/samba-tool dbcheck 2>&1)"
 
-    if test "$retval" = 0; then
-	echo -e "No errors were found in the Samba databases:\n"
-	/usr/bin/samba-tool dbcheck
+    if test $? = 0; then
+	echo -e "No errors were found in the Samba databases:\n$out"
     else
-	echo -e "Warning. There are no superuser rights or errors were found.\n"
-	/usr/bin/samba-tool dbcheck
+	echo -e "Warning. There are no superuser rights or errors were found.\n$out"
+	retval=2
     fi
 
     return $retval
@@ -612,6 +650,7 @@ task is_hostname_static_and_transient
 task is_not_empty_sysvol
 task is_samba_package_installed
 task is_samba_service_running
+task is_resolve_local
 task is_krb5_conf_file_exists
 task is_smb_conf_file_exists
 task is_there_way_to_cache_kerberos_tickets
