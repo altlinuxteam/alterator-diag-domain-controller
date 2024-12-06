@@ -44,6 +44,12 @@ DisplayName[ru_RU] = Проверка: запущена ли служба Samba
 Comment = Checking whether the Samba service is running
 Comment[ru_RU] = Проверка: запущена ли служба Samba
 
+[is_resolve_local]
+DisplayName = Checking for the string "nameserver 127.0.0.1" in file resolv.conf
+DisplayName[ru_RU] = Проверка наличия строки "nameserver 127.0.0.1" в файле resolv.conf
+Comment = Checking for the string "nameserver 127.0.0.1" in file resolv.conf
+Comment[ru_RU] = Проверка наличия строки "nameserver 127.0.0.1" в файле resolv.conf
+
 [is_krb5_conf_file_exists]
 DisplayName = Checking for the presence of the krb5.conf configuration file and displaying the contents of the file
 DisplayName[ru_RU] = Проверка наличия файла конфигурации krb5.conf и отображение содержимого файла
