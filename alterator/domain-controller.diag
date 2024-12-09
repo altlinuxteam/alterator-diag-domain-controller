@@ -1,111 +1,111 @@
-[Alterator Entry]
-Name = domain_controller
-Type = Diagnostictool
-DisplayName = Domain controller
-DisplayName[ru_RU] = Контроллер домена
-Comment = The Domain Controller Status Diagnostic Utility
-Comment[ru_RU] = Инструмент диагностики состояния контроллера домена
-Icon = diag-domain-controller
-ReportSuffix = tar.gz
+name = "domain_controller"
+type = "Diag"
+category = "adtCategory"
+display_name.en = "Domain controller"
+display_name.ru = "Контроллер домена"
+comment.en = "The Domain Controller Status Diagnostic Utility"
+comment.eu = "Инструмент диагностики состояния контроллера домена"
+icon = "diag-domain-controller"
+report_suffix = "tar.gz"
 
-[is_domain_info_available]
-DisplayName = Checking the availability of viewing general domain information
-DisplayName[ru_RU] = Проверка доступности просмотра общей информации о домене
-Comment = Checking the availability of viewing general domain information
-Comment[ru_RU] = Проверка доступности просмотра общей информации о домене
+[tests.is_domain_info_available]
+display_name.en = "Checking the availability of viewing general domain information"
+display_name.ru = "Проверка доступности просмотра общей информации о домене"
+comment.en = "Checking the availability of viewing general domain information"
+comment.ru = "Проверка доступности просмотра общей информации о домене"
 
-[is_hostname_correct]
-DisplayName = Checking the correct spelling of the domain name of the host
-DisplayName[ru_RU] = Проверка правильного написания доменного имени хоста
-Comment = Checking the correct spelling of the domain name of the host
-Comment[ru_RU] = Проверка правильного написания доменного имени хоста
+[tests.is_hostname_correct]
+display_name.en = "Checking the correct spelling of the domain name of the host"
+display_name.ru = "Проверка правильного написания доменного имени хоста"
+comment.en = "Checking the correct spelling of the domain name of the host"
+comment.ru = "Проверка правильного написания доменного имени хоста"
 
-[is_hostname_static_and_transient]
-DisplayName = Checking if the static and temporary hostname match
-DisplayName[ru_RU] = Проверка соответствия статического и временного имён хостов
-Comment = Checking if the static and temporary hostname match
-Comment[ru_RU] = Проверка соответствия статического и временного имён хостов
+[tests.is_hostname_static_and_transient]
+display_name.en = "Checking if the static and temporary hostname match"
+display_name.ru = "Проверка соответствия статического и временного имён хостов"
+comment.en = "Checking if the static and temporary hostname match"
+comment.ru = "Проверка соответствия статического и временного имён хостов"
 
-[is_not_empty_sysvol]
-DisplayName = Checking if the sysvol directory is empty
-DisplayName[ru_RU] = Проверка: содержит ли файлы каталог sysvol
-Comment = Checking if the sysvol directory is empty
-Comment[ru_RU] = Проверка: содержит ли файлы каталог sysvol
+[tests.is_not_empty_sysvol]
+display_name.en = "Checking if the sysvol directory is empty"
+display_name.ru = "Проверка: содержит ли файлы каталог sysvol"
+comment.en = "Checking if the sysvol directory is empty"
+comment.ru = "Проверка: содержит ли файлы каталог sysvol"
 
-[is_samba_package_installed]
-DisplayName = Checking for the samba package in the system
-DisplayName[ru_RU] = Проверка наличия установленного в системе пакета samba
-Comment = Checking for the samba package in the system
-Comment[ru_RU] = Проверка наличия установленного в системе пакета samba
+[tests.is_samba_package_installed]
+display_name.en = "Checking for the samba package in the system"
+display_name.ru = "Проверка наличия установленного в системе пакета samba"
+comment.en = "Checking for the samba package in the system"
+comment.ru = "Проверка наличия установленного в системе пакета samba"
 
-[is_samba_service_running]
-DisplayName = Checking whether the Samba service is running
-DisplayName[ru_RU] = Проверка: запущена ли служба Samba
-Comment = Checking whether the Samba service is running
-Comment[ru_RU] = Проверка: запущена ли служба Samba
+[tests.is_samba_service_running]
+display_name.en = "Checking whether the Samba service is running"
+display_name.ru = "Проверка: запущена ли служба Samba"
+comment.en = "Checking whether the Samba service is running"
+comment.ru = "Проверка: запущена ли служба Samba"
 
-[is_resolve_local]
-DisplayName = Checking for the string "nameserver 127.0.0.1" in file resolv.conf
-DisplayName[ru_RU] = Проверка наличия строки "nameserver 127.0.0.1" в файле resolv.conf
-Comment = Checking for the string "nameserver 127.0.0.1" in file resolv.conf
-Comment[ru_RU] = Проверка наличия строки "nameserver 127.0.0.1" в файле resolv.conf
+[tests.is_resolve_local]
+display_name.en = "Checking for the string nameserver 127.0.0.1 in file resolv.conf"
+display_name.ru = "Проверка наличия строки nameserver 127.0.0.1 в файле resolv.conf"
+comment.en = "Checking for the string nameserver 127.0.0.1 in file resolv.conf"
+comment.ru = "Проверка наличия строки nameserver 127.0.0.1 в файле resolv.conf"
 
-[is_krb5_conf_file_exists]
-DisplayName = Checking for the presence of the krb5.conf configuration file and displaying the contents of the file
-DisplayName[ru_RU] = Проверка наличия файла конфигурации krb5.conf и отображение содержимого файла
-Comment = Checking for the presence of the krb5.conf configuration file and displaying the contents of the file
-Comment[ru_RU] = Проверка наличия файла конфигурации krb5.conf и отображение содержимого файла
+[tests.is_krb5_conf_file_exists]
+display_name.en = "Checking for the presence of the krb5.conf configuration file and displaying the contents of the file"
+display_name.ru = "Проверка наличия файла конфигурации krb5.conf и отображение содержимого файла"
+comment.en = "Checking for the presence of the krb5.conf configuration file and displaying the contents of the file"
+comment.ru = "Проверка наличия файла конфигурации krb5.conf и отображение содержимого файла"
 
-[is_smb_conf_file_exists]
-DisplayName = Checking for the presence of the smb.conf configuration file and displaying the contents of the file
-DisplayName[ru_RU] = Проверка наличия файла конфигурации smb.conf и отображение содержимого файла
-Comment = Checking for the presence of the smb.conf configuration file and displaying the contents of the file
-Comment[ru_RU] = Проверка наличия файла конфигурации smb.conf и отображение содержимого файла
+[tests.is_smb_conf_file_exists]
+display_name.en = "Checking for the presence of the smb.conf configuration file and displaying the contents of the file"
+display_name.ru = "Проверка наличия файла конфигурации smb.conf и отображение содержимого файла"
+comment.en = "Checking for the presence of the smb.conf configuration file and displaying the contents of the file"
+comment.ru = "Проверка наличия файла конфигурации smb.conf и отображение содержимого файла"
 
-[is_there_way_to_cache_kerberos_tickets]
-DisplayName = Checking the specified method of caching Kerberos tickets
-DisplayName[ru_RU] = Проверка указанного метода кэширования билетов Kerberos
-Comment = Checking the specified method of caching Kerberos tickets
-Comment[ru_RU] = Проверка указанного метода кэширования билетов Kerberos
+[tests.is_there_way_to_cache_kerberos_tickets]
+display_name.en = "Checking the specified method of caching Kerberos tickets"
+display_name.ru = "Проверка указанного метода кэширования билетов Kerberos"
+comment.en = "Checking the specified method of caching Kerberos tickets"
+comment.ru = "Проверка указанного метода кэширования билетов Kerberos"
 
-[is_dns_lookup_kdc_enabled]
-DisplayName = Checking: is the search for the kerberos domain name enabled via DNS
-DisplayName[ru_RU] = Проверка: включен ли поиск доменного имени kerberos через DNS
-Comment = Checking: is the search for the kerberos domain name enabled via DNS
-Comment[ru_RU] = Проверка: включен ли поиск доменного имени kerberos через DNS
+[tests.is_dns_lookup_kdc_enabled]
+display_name.en = "Checking: is the search for the kerberos domain name enabled via DNS"
+display_name.ru = "Проверка: включен ли поиск доменного имени kerberos через DNS"
+comment.en = "Checking: is the search for the kerberos domain name enabled via DNS"
+comment.ru = "Проверка: включен ли поиск доменного имени kerberos через DNS"
 
-[is_resolv_conf_file_exists]
-DisplayName = Checking for the presence of the resolv.conf configuration file and displaying the contents of the file
-DisplayName[ru_RU] = Проверка наличия файла конфигурации resolv.conf и отображение содержимого файла
-Comment = Checking for the presence of the resolv.conf configuration file and displaying the contents of the file
-Comment[ru_RU] = Проверка наличия файла конфигурации resolv.conf и отображение содержимого файла
+[tests.is_resolv_conf_file_exists]
+display_name.en = "Checking for the presence of the resolv.conf configuration file and displaying the contents of the file"
+display_name.ru = "Проверка наличия файла конфигурации resolv.conf и отображение содержимого файла"
+comment.en = "Checking for the presence of the resolv.conf configuration file and displaying the contents of the file"
+comment.ru = "Проверка наличия файла конфигурации resolv.conf и отображение содержимого файла"
 
-[does_resolv_conf_and_default_realm_it_match]
-DisplayName = Checking whether the realm record in the krb5.conf configuration file matches one of the domain names in the resolv.conf configuration file
-DisplayName[ru_RU] = Проверка соответствия realm-записи в файле конфигурации krb5.conf одному из доменных имён в файле конфигурации resolv.conf
-Comment = Checking whether the realm record in the krb5.conf configuration file matches one of the domain names in the resolv.conf configuration file
-Comment[ru_RU] = Проверка соответствия realm-записи в файле конфигурации krb5.conf одному из доменных имён в файле конфигурации resolv.conf
+[tests.does_resolv_conf_and_default_realm_it_match]
+display_name.en = "Checking whether the realm record in the krb5.conf configuration file matches one of the domain names in the resolv.conf configuration file"
+display_name.ru = "Проверка соответствия realm-записи в файле конфигурации krb5.conf одному из доменных имён в файле конфигурации resolv.conf"
+comment.en = "Checking whether the realm record in the krb5.conf configuration file matches one of the domain names in the resolv.conf configuration file"
+comment.ru = "Проверка соответствия realm-записи в файле конфигурации krb5.conf одному из доменных имён в файле конфигурации resolv.conf"
 
-[does_smb_realm_and_krb5_default_realm_it_match]
-DisplayName = Checking the correspondence of the domain entry in the krb5.conf configuration file to the realm entry in the smb.conf configuration file
-DisplayName[ru_RU] = Проверка соответствия записи домена в файле конфигурации krb5.conf и realm-записи в файле конфигурации smb.conf
-Comment = Checking the correspondence of the domain entry in the krb5.conf configuration file to the realm entry in the smb.conf configuration file
-Comment[ru_RU] = Проверка соответствия записи домена в файле конфигурации krb5.conf и realm-записи в файле конфигурации smb.conf
+[tests.does_smb_realm_and_krb5_default_realm_it_match]
+display_name.en = "Checking the correspondence of the domain entry in the krb5.conf configuration file to the realm entry in the smb.conf configuration file"
+display_name.ru = "Проверка соответствия записи домена в файле конфигурации krb5.conf и realm-записи в файле конфигурации smb.conf"
+comment.en = "Checking the correspondence of the domain entry in the krb5.conf configuration file to the realm entry in the smb.conf configuration file"
+comment.ru = "Проверка соответствия записи домена в файле конфигурации krb5.conf и realm-записи в файле конфигурации smb.conf"
 
-[are_there_errors_in_samba_databases]
-DisplayName = Samba databases are checked for errors
-DisplayName[ru_RU] = Проверка на наличие ошибок в базах Samba
-Comment = Samba databases are checked for errors
-Comment[ru_RU] = Проверка на наличие ошибок в базах Samba
+[tests.are_there_errors_in_samba_databases]
+display_name.en = "Samba databases are checked for errors"
+display_name.ru = "Проверка на наличие ошибок в базах Samba"
+comment.en = "Samba databases are checked for errors"
+comment.ru = "Проверка на наличие ошибок в базах Samba"
 
-[is_ntp_service_running]
-DisplayName = Checking the activity of the ntp service
-DisplayName[ru_RU] = Проверка: запущена ли служба NTP
-Comment = Checking the activity of the ntp service
-Comment[ru_RU] = Проверка: запущена ли служба NTP
+[tests.is_ntp_service_running]
+display_name.en = "Checking the activity of the ntp service"
+display_name.ru = "Проверка: запущена ли служба NTP"
+comment.en = "Checking the activity of the ntp service"
+comment.ru = "Проверка: запущена ли служба NTP"
 
-[is_time_synchronization_enabled]
-DisplayName = Checking if time synchronization is enabled
-DisplayName[ru_RU] = Проверка синхронизации времени
-Comment = Checking if time synchronization is enabled
-Comment[ru_RU] = Проверка синхронизации времени
+[tests.is_time_synchronization_enabled]
+display_name.en = "Checking if time synchronization is enabled"
+display_name.ru = "Проверка синхронизации времени"
+comment.en = "Checking if time synchronization is enabled"
+comment.ru = "Проверка синхронизации времени"
